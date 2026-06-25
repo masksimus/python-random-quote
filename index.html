@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#17112f">
+  <meta name="description" content="Космо Кликер: ВК — быстрый idle clicker с апгрейдами, ежедневными наградами и рекламной монетизацией для VK Games.">
+  <title>Космо Кликер: ВК</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app">
+    <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🚀</span>
+        <div>
+          <strong>Космо Кликер</strong>
+          <small id="playerRank">Новичок VK</small>
+        </div>
+      </div>
+      <button id="soundBtn" class="icon-btn" aria-label="Звук">🔊</button>
+    </header>
+
+    <main class="game-shell">
+      <section class="stats-card">
+        <div class="currency-row">
+          <div class="currency"><span>⭐</span><b id="coins">0</b><small>звёзды</small></div>
+          <div class="currency premium"><span>💎</span><b id="gems">0</b><small>кристаллы</small></div>
+        </div>
+        <div class="level-line">
+          <span id="levelText">Уровень 1</span>
+          <span id="powerText">Сила 1</span>
+        </div>
+        <div class="progress"><div id="xpBar"></div></div>
+      </section>
+
+      <section class="arena-card">
+        <div class="round-meta">
+          <span id="roundText">Раунд 1</span>
+          <span id="timerText">60с</span>
+        </div>
+        <button id="coreButton" class="core-button" aria-label="Добывать звёзды">
+          <span class="planet">🪐</span>
+          <strong>ТАПАЙ!</strong>
+          <small id="gainText">+1 за тап</small>
+        </button>
+        <div class="goal-box">
+          <span>Цель раунда</span>
+          <b id="goalText">100 ⭐</b>
+          <div class="progress mini"><div id="goalBar"></div></div>
+        </div>
+      </section>
+
+      <section class="combo-card">
+        <div><b id="comboText">Комбо x1</b><small>Тапай быстро — получай больше</small></div>
+        <button id="shareBtn" class="ghost-btn">Позвать друга +25⭐</button>
+      </section>
+
+      <nav class="actions-grid">
+        <button id="tapUpgradeBtn" class="shop-btn"><span>👆</span><b>Тап</b><small id="tapUpgradeText">Цена 25⭐</small></button>
+        <button id="idleUpgradeBtn" class="shop-btn"><span>🤖</span><b>Дрон</b><small id="idleUpgradeText">Цена 60⭐</small></button>
+        <button id="boostBtn" class="shop-btn ad"><span>📺</span><b>x2 награда</b><small>Reward Ad</small></button>
+        <button id="bonusBtn" class="shop-btn ad"><span>🎁</span><b>Бонус</b><small>+валюта за рекламу</small></button>
+      </nav>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+
+    <section id="dailyModal" class="modal hidden">
+      <div class="modal-card">
+        <span class="modal-emoji">🎁</span>
+        <h2>Ежедневный бонус</h2>
+        <p id="dailyText">Серия 1 дня: забери награду и усиливай корабль каждый день.</p>
+        <button id="claimDailyBtn" class="primary-btn">Забрать</button>
+      </div>
+    </section>
+
+    <section id="gameOverModal" class="modal hidden">
+      <div class="modal-card">
+        <span id="resultEmoji" class="modal-emoji">💥</span>
+        <h2 id="resultTitle">Почти получилось!</h2>
+        <p id="resultText">Не хватило совсем немного — прокачайся и попробуй ещё раз.</p>
+        <div class="reward-row"><span id="earnedText">+0 ⭐</span><span id="xpEarnedText">+0 XP</span></div>
+        <button id="reviveBtn" class="primary-btn ad-btn">📺 Возродиться</button>
+        <button id="doubleBtn" class="secondary-btn">📺 x2 награда</button>
+        <button id="restartBtn" class="primary-btn">Мгновенный рестарт</button>
+      </div>
+    </section>
+  </div>
+  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
