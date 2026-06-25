@@ -1,0 +1,12 @@
+{
+  "name": "Космо Кликер: ВК",
+  "short_name": "КосмоКликер",
+  "description": "Мобильный idle clicker для VK Games: короткие раунды, апгрейды, daily rewards, reward/interstitial ads и VK Bridge-ready сохранения.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#17112f",
+  "theme_color": "#17112f",
+  "lang": "ru",
+  "icons": []
+}
