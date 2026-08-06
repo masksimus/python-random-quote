@@ -1,0 +1,4 @@
+create table if not exists users(id serial primary key,vk_user_id text unique not null,first_name text not null default '',premium boolean not null default false,created_at timestamptz not null default now());
+create table if not exists readings(id serial primary key,user_id integer not null references users(id) on delete cascade,card_id text not null,reading_date date not null,created_at timestamptz not null default now(),unique(user_id,reading_date));
+create table if not exists favorites(user_id integer not null references users(id) on delete cascade,reading_id integer not null references readings(id) on delete cascade,created_at timestamptz not null default now(),primary key(user_id,reading_id));
+create table if not exists notifications(id serial primary key,user_id integer not null references users(id) on delete cascade,message text not null,send_at timestamptz not null,delivered boolean not null default false);

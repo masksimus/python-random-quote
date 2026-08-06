@@ -1,0 +1,43 @@
+{
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "server:dev": "tsx watch server/src/index.ts",
+    "server:build": "tsc -p server/tsconfig.json",
+    "server:start": "node server/dist/index.js",
+    "db:migrate": "tsx server/src/db/migrate.ts"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "@vkontakte/icons": "latest",
+    "@vkontakte/vk-bridge": "latest",
+    "@vkontakte/vkui": "latest",
+    "axios": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "framer-motion": "latest",
+    "jsonwebtoken": "latest",
+    "pg": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/jsonwebtoken": "latest",
+    "@types/node": "latest",
+    "@types/pg": "latest",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

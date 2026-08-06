@@ -1,0 +1,11 @@
+import 'dotenv/config';import express from'express';import cors from'cors';import jwt from'jsonwebtoken';import{pool}from'./db/pool.js';import{auth,Authed}from'./middleware/auth.js';
+const app=express();app.use(cors({origin:process.env.CORS_ORIGIN?.split(',')??'*'}));app.use(express.json());
+const deck=['fool','magician','star','sun','moon'];
+app.get('/api/health',(_,res)=>res.json({ok:true}));
+app.post('/api/auth/vk',async(req,res)=>{const{vkUserId,firstName}=req.body;const r=await pool.query('insert into users(vk_user_id,first_name) values($1,$2) on conflict(vk_user_id) do update set first_name=excluded.first_name returning id,vk_user_id',[vkUserId,firstName]);const u=r.rows[0];res.json({token:jwt.sign({id:u.id,vkUserId:u.vk_user_id},process.env.JWT_SECRET!,{expiresIn:'30d'})})});
+app.get('/api/readings/today',auth,async(req:Authed,res)=>{const uid=req.user!.id;const today=new Date().toISOString().slice(0,10);let r=await pool.query('select * from readings where user_id=$1 and reading_date=$2',[uid,today]);if(!r.rowCount){const card=deck[(new Date().getUTCDate()+uid)%deck.length];r=await pool.query('insert into readings(user_id,card_id,reading_date) values($1,$2,$3) returning *',[uid,card,today])}res.json(r.rows[0])});
+app.get('/api/readings',auth,async(req:Authed,res)=>{const r=await pool.query('select * from readings where user_id=$1 order by reading_date desc',[req.user!.id]);res.json(r.rows)});
+app.post('/api/favorites/:readingId',auth,async(req:Authed,res)=>{await pool.query('insert into favorites(user_id,reading_id) values($1,$2) on conflict do nothing',[req.user!.id,req.params.readingId]);res.json({ok:true})});
+app.get('/api/favorites',auth,async(req:Authed,res)=>{const r=await pool.query('select r.* from favorites f join readings r on r.id=f.reading_id where f.user_id=$1',[req.user!.id]);res.json(r.rows)});
+app.post('/api/premium',auth,async(req:Authed,res)=>{await pool.query('update users set premium=true where id=$1',[req.user!.id]);res.json({premium:true})});
+app.listen(process.env.PORT??3000,()=>console.log('api ready'));
